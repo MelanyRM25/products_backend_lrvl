@@ -8,22 +8,24 @@ use Illuminate\Support\Facades\Process;
 
 class ProductController extends Controller
 {
-function index(){
-    return Product::all(); //muestra todos los productos
-}
+    function index(){
+        return Product::all();
+    }
     function store(Request $request){
-        return Product::create($request->all()); //para guardar 
-}
-function update(Request $request, Product $product){
-$product ->update($request->all()); //para actualizar
-return $product;
-}
-function show (Product $product){
-    return $product;
-}
-function destroy(Product $product){
-
-    $product->delete(); //eliminar 
-    return $product;
-}
+        $validatedData = $request->validate([
+            'name' => 'required',
+        ]);
+        return Product::create($request->all());
+    }
+    function show(Product $product){
+        return $product;
+    }
+    function update(Request $request, Product $product){
+        $product->update($request->all());
+        return $product;
+    }
+    function destroy(Product $product){
+        $product->delete();
+        return $product;
+    }
 }
